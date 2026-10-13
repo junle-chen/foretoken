@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: Copyright contributors to the Foretoken project
+target: Qwen/Qwen3-8B
+native:
+  small: {method: draft_model, model: Qwen/Qwen3-0.6B, gamma: [1, 2, 4, 8]}
+  ngram: {method: ngram, gamma: [1, 2, 4]}
+  eagle3: {method: eagle3, model: Tengyunw/qwen3_8b_eagle3, gamma: [1, 2, 3, 4, 8]}
+  dflash: {method: dflash, model: z-lab/Qwen3-8B-DFlash-b16, gamma: [1, 2, 4, 8, 15]}
+reference:
+  models:
+    T: {model: Qwen/Qwen3-8B, dtype: float32}
+    S: {model: Qwen/Qwen3-0.6B, dtype: bfloat16}
+    M: {model: Qwen/Qwen3-4B-Instruct-2507, dtype: bfloat16}
+  conditions:
+    target: {drafts: []}
+    small: {drafts: [S], depth: 4, budget: 4}
+    medium: {drafts: [M], depth: 4, budget: 4}
+    branched: {drafts: [S], depth: 4, width: 2, budget: 8}
+    merge: {drafts: [S, M], depth: 4, budget: 8}
+upstream:
+  treegraft:
+    repository: https://github.com/fjm9933/TreeGraft.git
+    revision: e4d137605f2fabf7d6307f53ff60f7d4b5837180
+    patch: benchmarks/experiments/multi-draft/treegraft-lazy-model-imports.patch
+    dependencies: [transformers==4.57.1, accelerate==1.12.0, sentencepiece, protobuf]
+  ddtree:
+    repository: https://github.com/liranringel/ddtree.git
+    revision: c96427a185677bf4133ed865dd1626a5041aef9b
+    dependencies: [transformers==4.57.1, accelerate==1.12.0, datasets, loguru, ninja, typing_extensions]
+  d2sd:
+    repository: https://github.com/catnanami/D2-SD.git
+    revision: 4c4b4917e56bf004a87eeed1e40af7f9f51af986
+    dependencies: [transformers==4.57.1, accelerate==1.12.0, datasets, loguru, rich, flashinfer-python==0.2.5]
+  whiflash:
+    repository: https://github.com/SamsungLabs/WhiFlash.git
+    revision: db065b63d0f1344202769f382d89a3e3ac6deaa3
+    unavailable: Public repository contains only a placeholder README.

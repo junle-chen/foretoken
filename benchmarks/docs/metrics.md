@@ -25,6 +25,8 @@ Results include aggregate metrics and per-request records.
 
 Request latency distributions use successful requests. `--no-stream` retains latency and throughput but omits TTFT, TPOT, and ITL. Usage-only chunks do not advance streaming timing.
 
+HTTP performance runs, including trace replay, retain the service's `finish_reason` in `raw_output.json`, such as `stop` or `length`; a missing observation remains `null`. Output length alone does not establish why generation ended. Each record also includes `source_id` to identify its input and `request_id` to distinguish individual requests.
+
 ITL percentiles have 1% relative value error. Request-level ITL SLOs compare the maximum interval.
 
 ## Curves

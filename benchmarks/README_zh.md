@@ -6,6 +6,8 @@
 
 [实验命令示例](docs/recipes_zh.md)
 
+[多 Draft 基线](experiments/multi-draft/README_zh.md)提供冻结评测输入及原生、参考树和官方推测解码对照入口。
+
 ## 开始使用
 
 使用 Python 3.11 或更高版本安装 Foretoken：

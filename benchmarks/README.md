@@ -6,6 +6,8 @@ Measure service latency and throughput with `foretoken perf`, score model answer
 
 [Experiment commands](docs/recipes.md)
 
+[Multi-Draft baselines](experiments/multi-draft/README.md) prepare frozen evaluation inputs and run native, reference-tree and official speculative-decoding comparisons.
+
 ## Get started
 
 Install Foretoken with Python 3.11 or later:

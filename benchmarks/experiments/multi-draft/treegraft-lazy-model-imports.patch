@@ -1,0 +1,86 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: Copyright contributors to the Foretoken project
+# Import only the selected architecture; unused upstream Llama doc decorators fail at import.
+
+diff --git a/graft/combine_tree/generator.py b/graft/combine_tree/generator.py
+index b548f37..b7282bd 100644
+--- a/graft/combine_tree/generator.py
++++ b/graft/combine_tree/generator.py
+@@ -325,31 +325,31 @@ class CombineDraftGenerator(NgramDraftGenerator):
+ 
+     def _load_kv_causal_lm(self, model_path, dtype, device_map):
+         from transformers import AutoConfig
+-        from graft.model.modeling_llama_kv import LlamaForCausalLM as KVLlamaForCausalLM
+-        from graft.model.modeling_qwen2_kv import Qwen2ForCausalLM as KVQwen2ForCausalLM
+-        from graft.model.modeling_qwen3_kv import Qwen3ForCausalLM as KVQwen3ForCausalLM
+-        from graft.model.modeling_mixtral_kv import MixtralForCausalLM as KVMixtralForCausalLM
+ 
+         model_type = AutoConfig.from_pretrained(model_path).architectures[0]
+         if model_type == "LlamaForCausalLM":
++            from graft.model.modeling_llama_kv import LlamaForCausalLM as KVLlamaForCausalLM
+             model = KVLlamaForCausalLM.from_pretrained(
+                 model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         elif model_type == "Qwen2ForCausalLM":
++            from graft.model.modeling_qwen2_kv import Qwen2ForCausalLM as KVQwen2ForCausalLM
+             model = KVQwen2ForCausalLM.from_pretrained(
+                 model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         elif model_type == "Qwen3ForCausalLM":
++            from graft.model.modeling_qwen3_kv import Qwen3ForCausalLM as KVQwen3ForCausalLM
+             model = KVQwen3ForCausalLM.from_pretrained(
+                 model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         else:
++            from graft.model.modeling_mixtral_kv import MixtralForCausalLM as KVMixtralForCausalLM
+             model = KVMixtralForCausalLM.from_pretrained(
+                 model_path,
+                 torch_dtype=dtype,
+diff --git a/graft/ngram_tree/propagator.py b/graft/ngram_tree/propagator.py
+index d165ea7..2ff5437 100644
+--- a/graft/ngram_tree/propagator.py
++++ b/graft/ngram_tree/propagator.py
+@@ -26,33 +26,33 @@ class NgramPropagator:
+     ):
+         """Create a propagation loop for the target model and n-gram drafter."""
+ 
+-        from graft.model.modeling_llama_kv import LlamaForCausalLM as KVLlamaForCausalLM
+-        from graft.model.modeling_qwen2_kv import Qwen2ForCausalLM as KVQwen2ForCausalLM
+-        from graft.model.modeling_qwen3_kv import Qwen3ForCausalLM as KVQwen3ForCausalLM
+-        from graft.model.modeling_mixtral_kv import MixtralForCausalLM as KVMixtralForCausalLM
+         from transformers import AutoConfig
+ 
+         Type = AutoConfig.from_pretrained(base_model_path).architectures[0]
+ 
+         if Type == 'LlamaForCausalLM':
++            from graft.model.modeling_llama_kv import LlamaForCausalLM as KVLlamaForCausalLM
+             self.base_model = KVLlamaForCausalLM.from_pretrained(
+                 base_model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         elif Type == 'Qwen2ForCausalLM':
++            from graft.model.modeling_qwen2_kv import Qwen2ForCausalLM as KVQwen2ForCausalLM
+             self.base_model = KVQwen2ForCausalLM.from_pretrained(
+                 base_model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         elif Type == 'Qwen3ForCausalLM':
++            from graft.model.modeling_qwen3_kv import Qwen3ForCausalLM as KVQwen3ForCausalLM
+             self.base_model = KVQwen3ForCausalLM.from_pretrained(
+                 base_model_path,
+                 torch_dtype=dtype,
+                 device_map=device_map,
+             )
+         else:
++            from graft.model.modeling_mixtral_kv import MixtralForCausalLM as KVMixtralForCausalLM
+             self.base_model = KVMixtralForCausalLM.from_pretrained(
+                 base_model_path,
+                 torch_dtype=dtype,

@@ -25,6 +25,8 @@
 
 请求延迟分布只统计成功请求。`--no-stream` 保留延迟和吞吐量，不报告 TTFT、TPOT 和 ITL。仅含用量统计的分片不计入流式计时。
 
+HTTP 性能评测（包括轨迹回放）在 `raw_output.json` 中保留服务返回的 `finish_reason`，如 `stop` 或 `length`；缺失观测为 `null`，不能仅凭输出长度判断结束原因。每条记录还包含用于追溯输入的 `source_id` 和区分各次请求的 `request_id`。
+
 ITL 分位数的相对数值误差为 1%。逐请求 ITL SLO 使用最大间隔判定。
 
 ## 曲线
