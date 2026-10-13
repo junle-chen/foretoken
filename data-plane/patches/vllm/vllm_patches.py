@@ -40,13 +40,15 @@ def engine_patches(directory: Path, version: str, patches: Path) -> list[Path]:
             "tensor_parallel_size: int" in source
             and "decode_context_parallel_size: int" in source
         )
+        if legacy_ready_backport:
+            series_name = "compatibility/v1-default/series"
 
     selected = []
     for line in (patches / series_name).read_text().splitlines():
         name = line.split("#", 1)[0].strip()
         if not name:
             continue
-        if legacy_ready_backport and name == "compatibility/v1-legacy/ready-logprobs.patch":
+        if legacy_ready_backport and name == "common/ready-logprobs.patch":
             name = "compatibility/v1-modern-ready-logprobs.patch"
         optional = version_map["optional_patches"].get(name)
         if optional is not None and (

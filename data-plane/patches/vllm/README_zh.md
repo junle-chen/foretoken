@@ -17,8 +17,6 @@ SPDX-FileCopyrightText: Copyright contributors to the Foretoken project
 
 清单中的路径相对于本目录。补丁使用 `-p1`，应用目录是包含 `vllm/` 的上游仓库根目录或已安装包的父目录。
 
-回移了新版 ready-output 接口的 vLLM 0.26 镜像仍使用 legacy 清单，选择器仅替换 ready-logprobs 补丁；profiling、计时和调度器 hooks 继续使用 legacy 插入位置。
-
 修改对应的上游源码后重新生成 unified diff。共享行为放在 `common/`，兼容补丁只保留有差异的导入、接口和插入位置。多个包版本可以使用同一份清单；扩展版本映射前，先在对应源码上检查整组补丁，并实际运行受影响的功能。
 
 模型镜像通过 `apply.py` 选择清单、应用缺失补丁并编译改动的 Python 文件。Rust 源码准备直接读取 `source.series`，不按 Python 包版本选择。再次执行源码准备或镜像构建，检查已应用补丁的源码能否复用。

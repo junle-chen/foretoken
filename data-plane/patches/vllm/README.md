@@ -17,8 +17,6 @@ English | [简体中文](README_zh.md)
 
 Series entries are relative to this directory. Patches use `-p1` against the upstream repository root or the installed package's parent directory, both of which contain `vllm/`.
 
-vLLM 0.26 images that backport the newer ready-output interface retain the legacy series; the selector substitutes only the ready-logprobs patch. Profiling, timing and scheduler hooks still use the legacy insertion points.
-
 Edit the corresponding upstream source and regenerate unified diffs. Keep shared behavior in `common/`; compatibility patches retain only the differing imports, interfaces, and insertion points. Several package versions can use the same series. Extend the version mapping after checking the patch stack against those sources and exercising the affected runtime.
 
 The model-server image runs `apply.py` to select a series, apply missing patches, and compile the changed Python files. Rust source preparation reads `source.series` without selecting a Python package version. Run source preparation or image construction again to check that an already-patched tree is accepted.
